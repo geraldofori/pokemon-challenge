@@ -1,15 +1,112 @@
-import { Container, Typography, Stack, Pagination } from '@mui/material'
-import React from 'react'
+import { Container, Typography, Stack, Pagination, Box, Grid } from '@mui/material';
+import {Card, CardContent,CardActionArea, CardMedia} from '@mui/material';
+import React from 'react';
+import Pokemon from '../assets/pokemon-test.png'
+
 
 const Homepage = () => {
   return (
-    <Container maxWidth="sm">
+    <Container maxWidth={false} disableGutters={true}>
+      <Box sx={{ bgcolor: '#cfe8fc', height: '100vh'}}>
         <Typography pt={3} align='center' variant='h5'>Pokemon Challenge</Typography>
 
+        <Grid container spacing={3} px={3} pt={3}>
+          <Grid item xs={3}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={Pokemon}
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Lizards are a widespread group of squamate reptiles, with over 6,000
+                    species, ranging across all continents except Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
 
-      <Stack pt={3} direction="row" justifyContent="center">
-        <Pagination count={10} variant="outlined" color="primary" />
-      </Stack>
+          <Grid item xs={3}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={Pokemon}
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Lizards are a widespread group of squamate reptiles, with over 6,000
+                    species, ranging across all continents except Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={3}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={Pokemon}
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Lizards are a widespread group of squamate reptiles, with over 6,000
+                    species, ranging across all continents except Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+          <Grid item xs={3}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  image={Pokemon}
+                  alt="green iguana"
+                />
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="div">
+                    Lizard
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    Lizards are a widespread group of squamate reptiles, with over 6,000
+                    species, ranging across all continents except Antarctica
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          </Grid>
+
+
+        </Grid>
+
+
+        <Stack pt={3} direction="row" justifyContent="center">
+          <Pagination count={10} variant="outlined" color="primary" />
+        </Stack>
+      </Box>
     </Container>
 
   )

@@ -10,7 +10,6 @@ import { Link as RouterLink } from 'react-router-dom'
 const Homepage = () => {
 
   const [pokemons, setPokemons] = useState([]);
-  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
@@ -21,7 +20,7 @@ const Homepage = () => {
       try{
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`);
         setPokemons(response.data.results);
-        
+
         setLoading(true);
       }catch(error){
         alert(error.message)
@@ -31,22 +30,6 @@ const Homepage = () => {
     getPokemons();
   },[offset]);
 
-  useEffect(() => {
-    const getImages = async (url) => {
-      let number = url.split("/")[6];
-      const pictures = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`;
-  
-      setImages((pictures)=> ([...pictures, {pictures: pictures}]));
-      console.log(pictures);
-    };
-    
-
-    pokemons.forEach(pokemon => {
-      getImages(pokemon.url);
-    })
-
-  },[pokemons]);
-  
 
   
   
@@ -92,7 +75,7 @@ const Homepage = () => {
                   <CardMedia
                     component="img"
                     height="140"
-                    image={`${images}`}
+                    image={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.url.split("/")[6]}.png`}
                     alt={pokemon.name}
                   />
                   <CardContent>

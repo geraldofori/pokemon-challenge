@@ -3,6 +3,10 @@ import {Card, CardContent,CardActionArea, CardMedia} from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Pokemon from '../assets/pokemon-test.png';
 import axios from 'axios';
+import { Paper, InputBase} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 
 const Homepage = () => {
@@ -14,24 +18,25 @@ const Homepage = () => {
 
 
   useEffect(() => {
+    const getPokemons = async () => {
+      try{
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`);
+        setPokemons(response.data.results);
+        setLoading(true);
+      }catch(error){
+        alert(error.message)
+      }
+      
+    }
     getPokemons();
-  },[])
+  },[offset])
   
 
-  const getPokemons = async () => {
-    try{
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`);
-      setPokemons(response.data.results);
-      setLoading(true);
-    }catch(error){
-      alert(error.message)
-    }
-    
-
-  }
+  
 
   const handleChange = (event, value) => {
     setPage(value);
+    setOffset(value);
     console.log(value);
   };
 
@@ -40,6 +45,22 @@ const Homepage = () => {
     <Container maxWidth={false} disableGutters={true}>
       <Box sx={{ bgcolor: '#cfe8fc', height: '100%'}}>
         <Typography pt={3} align='center' variant='h5'>Pokemon Challenge</Typography>
+        <Stack pt={3} pb={3} direction="row" justifyContent="center">
+
+        <Paper
+          component="form"
+          sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400}}
+        >
+      <InputBase
+        sx={{ ml: 1, flex: 1 }}
+        placeholder="Search Pokemon"
+        inputProps={{ 'aria-label': 'search google maps' }}
+      />
+        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+          <SearchIcon />
+        </IconButton>
+      </Paper>
+      </Stack>
 
         <Grid container spacing={3} px={3} pt={3}>
         {loading && pokemons.map((pokemon)=>(

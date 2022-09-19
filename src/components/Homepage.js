@@ -13,6 +13,7 @@ const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
+  const [input, setInput] = useState("");
 
 
   useEffect(() => {
@@ -44,6 +45,16 @@ const Homepage = () => {
     }
   };
 
+  const handleInputChange = async (event,value) => {
+    setInput(value);
+    if(input > 3){
+      axios.get(`https://pokeapi.co/api/v2/pokemon/${input}`).then((response)=>{
+        console.log(response)
+      })
+    }
+
+  };
+
 
   return (
     <Container maxWidth={false} disableGutters={true}>
@@ -59,6 +70,7 @@ const Homepage = () => {
         sx={{ ml: 1, flex: 1 }}
         placeholder="Search Pokemon"
         inputProps={{ 'aria-label': 'search google maps' }}
+        onChange={handleInputChange}
       />
         <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
           <SearchIcon />

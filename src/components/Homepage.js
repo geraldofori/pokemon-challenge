@@ -1,17 +1,16 @@
 import { Container, Typography, Stack, Pagination, Box, Grid } from '@mui/material';
 import {Card, CardContent,CardActionArea, CardMedia} from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import Pokemon from '../assets/pokemon-test.png';
 import axios from 'axios';
 import { Paper, InputBase} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
-
-
+import { Link as RouterLink } from 'react-router-dom'
 
 const Homepage = () => {
 
   const [pokemons, setPokemons] = useState([]);
+  const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [offset, setOffset] = useState(0);
@@ -22,6 +21,7 @@ const Homepage = () => {
       try{
         const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`);
         setPokemons(response.data.results);
+        
         setLoading(true);
       }catch(error){
         alert(error.message)
@@ -29,15 +29,36 @@ const Homepage = () => {
       
     }
     getPokemons();
-  },[offset])
+  },[offset]);
+
+  useEffect(() => {
+    const getImages = async (url) => {
+      let number = url.split("/")[6];
+      const pictures = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${number}.png`;
+  
+      setImages((pictures)=> ([...pictures, {pictures: pictures}]));
+      console.log(pictures);
+    };
+    
+
+    pokemons.forEach(pokemon => {
+      getImages(pokemon.url);
+    })
+
+  },[pokemons]);
   
 
+  
   
 
   const handleChange = (event, value) => {
     setPage(value);
-    setOffset(value);
-    console.log(value);
+
+    if(value === 1){
+      setOffset(0);
+    }else{
+      setOffset((value * 14) - 12);
+    }
   };
 
 
@@ -67,20 +88,16 @@ const Homepage = () => {
 
             <Grid item xs={3}>
               <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea>
+                <CardActionArea component={RouterLink} to='/detail'>
                   <CardMedia
                     component="img"
                     height="140"
-                    image={Pokemon}
+                    image={`${images}`}
                     alt={pokemon.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div" align="center">
                       {pokemon.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      Lizards are a widespread group of squamate reptiles, with over 6,000
-                      species, ranging across all continents except Antarctica
                     </Typography>
                   </CardContent>
                 </CardActionArea>

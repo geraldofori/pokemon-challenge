@@ -9,15 +9,18 @@ const Homepage = () => {
 
   const [pokemons, setPokemons] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [offset, setOffset] = useState(0);
 
 
   useEffect(() => {
     getPokemons();
   },[])
+  
 
   const getPokemons = async () => {
     try{
-      const response = await axios.get("https://pokeapi.co/api/v2/pokemon?limit=16&offset=16");
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=16&offset=${offset}`);
       setPokemons(response.data.results);
       setLoading(true);
     }catch(error){
@@ -26,6 +29,11 @@ const Homepage = () => {
     
 
   }
+
+  const handleChange = (event, value) => {
+    setPage(value);
+    console.log(value);
+  };
 
 
   return (
@@ -43,7 +51,7 @@ const Homepage = () => {
                     component="img"
                     height="140"
                     image={Pokemon}
-                    alt="green iguana"
+                    alt={pokemon.name}
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div" align="center">
@@ -61,9 +69,14 @@ const Homepage = () => {
 
         </Grid>
 
-
         <Stack pt={3} pb={3} direction="row" justifyContent="center">
-          <Pagination count={10} variant="outlined" color="primary" />
+          <Pagination
+           count={10} 
+           variant="outlined" 
+           color="primary"
+           page={page}
+           onChange={handleChange}
+          />
         </Stack>
       </Box>
     </Container>

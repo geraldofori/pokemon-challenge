@@ -83,7 +83,7 @@ const Homepage = () => {
 
             <Grid item xs={3}>
               <Card sx={{ maxWidth: 345 }}>
-                <CardActionArea component={RouterLink} to='/detail'>
+                <CardActionArea component={RouterLink} to={`pokemon/${pokemon.name}`}>
                   <CardMedia
                     component="img"
                     height="140"

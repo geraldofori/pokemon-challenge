@@ -9,14 +9,23 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import axios from 'axios';
+import {useParams} from "react-router-dom";
 
 
 
 
 const Detail = () => {
+  // const [loading, setLoading] = useState(false);
 
-  const [pokemonName, setPokemonName] = useState([]);
-  const [pokemonData, setPokemonData] = useState({});
+  const [pokemonData, setPokemonData] = useState({
+    name: "",
+    species: "",
+    img: "",
+    hp: "",
+    attack: "",
+    defense: "",
+    type:""
+  });
 
 
   function createData(name, calories, fat, carbs, protein) {
@@ -30,20 +39,26 @@ const Detail = () => {
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
-  useEffect(() => {
 
+  let {name} = useParams();
+  console.log(name)
+  
+
+
+  useEffect(() => {
 
   const getPokemon = async () => {
     try{
-      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/1`);
-      // toArray.push(response.data);
+      const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`);
       setPokemonData({
-        name: pokemonName,
+        name: name,
         species: response.data.species.name,
         img: response.data.sprites.front_default,
-        hp: response.data.stats
+        hp: response.data.stats[0].base_stat,
+        attack: response.data.stats[1].base_stat,
+        defense: response.data.stats[2].base_stat,
+        type: response.data.types[0].type.name
       });
-      console.log(response.data.moves)
 
       // setLoading(true);
     }catch(error){
@@ -52,13 +67,20 @@ const Detail = () => {
     
   }
   getPokemon();
-  },[pokemonName]);
+  },[name,pokemonData]);
+
+  
+
+    
+
+
 
   return (
     <Container maxWidth={false} disableGutters={true}>
         <Stack pt={3} pb={3} direction="row" justifyContent="center">
           <Box sx={{ bgcolor: '#cfe8fc', height: '100%'}}>
-
+            
+          
           <Grid container spacing={3} px={3} pt={3}>
             <Grid item>
               <Card sx={{ maxWidth: 1200 }}>
@@ -71,7 +93,7 @@ const Detail = () => {
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div" align="center">
-                      Pokemon
+                      {pokemonData.name}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -108,6 +130,7 @@ const Detail = () => {
         </TableBody>
       </Table>
     </TableContainer>
+    
 
 
           </Box>

@@ -15,8 +15,6 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
 
 
-
-
 const Detail = () => {
   // const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(true);
@@ -91,7 +89,6 @@ const Detail = () => {
               </Card>
             </Grid>
           </Grid>
-
 
           <List
             sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
